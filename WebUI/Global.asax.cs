@@ -1,3 +1,4 @@
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebUI.Infrastructure.Binders;
 
 namespace WebUI
 {
@@ -14,13 +16,16 @@ namespace WebUI
     {
         protected void Application_Start()
         {
+            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = new System.Globalization.CultureInfo("en-US");
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+            ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());
+
+
         }
     }
 }

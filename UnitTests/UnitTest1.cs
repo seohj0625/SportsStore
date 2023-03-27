@@ -13,6 +13,19 @@ namespace UnitTests
     [TestClass]
     public class UnitTest1
     {
+        [TestMethod]
+        public void Cannot_Checkout_Empty_Cart()
+        {
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+            Cart cart = new Cart();
+            ShippingDetails shippingDetails = new ShippingDetails();
+            CartController target = new CartController(null, mock.Object);
+            ViewResult result = target.Checkout(cart, shippingDetails);
+
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Never());
+            Assert.AreEqual("", result.ViewName);
+            Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
+        }
         //[TestMethod]
         //public void Can_Paginte()
         //{

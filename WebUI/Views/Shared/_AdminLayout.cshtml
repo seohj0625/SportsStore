@@ -10,26 +10,19 @@
     <style>
         .navbar-right {
             float: right !important;
-            margin-right: 15px; 
+            margin-right: 15px;
             margin-left: 15px;
         }
     </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="#">SPORTS STORE</a>
-        @Html.Action("Summary", "Cart")
+    <div>
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success">@TempData["message"]</div>
+        }
+        @RenderBody()
     </div>
-    
-    <div class="row panel">
-        <div id="categories" class="col-xs-3">
-            @Html.Action("Menu", "Nav")
-        </div>
-        <div class="col-xs-8">
-            @RenderBody()
-        </div>
-    </div>
-    
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
